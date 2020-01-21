@@ -30,7 +30,8 @@ def index():
 @app.route("/<username>")
 def user(username):
     """Display chat messages"""
-    return "<h1>Welcome, {0}</h1>{1}".format(username, messages)
+    return render_template("chat.html", username=username,
+                           chat_messages=messages)
 
 
 @app.route("/<username>/<message>")
@@ -39,5 +40,5 @@ def send_message(username, message):
     add_messages(username, message)
     return redirect("/" + username)
 
-
-app.run(host=os.getenv("IP"), port=(os.getenv("PORT")), debug=True)
+"""this way allows it to run on gitpod, by entering the numbers below"""
+app.run(host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", "5000")), debug=True)
